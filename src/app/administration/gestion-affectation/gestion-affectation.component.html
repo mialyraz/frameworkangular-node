@@ -1,0 +1,242 @@
+<div class="card border-form d-flex flex-column container p-4" >
+    <div class="mb-3 text-center">
+        <div class="btn-group ms-auto"
+                   role="group">
+            <button type="button"  
+                    class="btn custom-btn" 
+                    [ngClass]="{'active-btn': selectedOptionType === 'N+1'}"
+                    (click)="setViewMode('N+1')">
+                 N+1
+            </button>
+        
+            <button type="button" 
+                    class="btn custom-btn" 
+                    [ngClass]="{'active-btn': selectedOptionType === 'collaborateur'}"
+                    (click)="setViewMode('collaborateur')">
+                 Collaborateur
+            </button>
+        </div>
+    </div>
+    <h4 class="mb-4 text-center" style="color: rgb(14, 12, 12); font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+        Affectation {{selectedOptionType}} par processus 
+    </h4>
+    <!-- Si N+1 -->
+    <div *ngIf="selectedOptionType === 'N+1'" >
+        <form>
+            <div class="form-group row mb-2">
+                <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">Processus :</label>
+                <div class="col-sm-10">
+                    <select name="nameProcess" id="nameProcess" [(ngModel)]="selectedProcessus" (change)="onProcessusChange()" class="form-select"
+                    style="border: 0.5px solid #b9cdc6; border-radius: 5PX; width: 100%; height: 38px;" required>
+                        <option value="" selected disabled >Nom processus</option>
+                        <option *ngFor="let proc of processusList" [value]="proc.processus">{{ proc.processus }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">Sous processus :</label>
+                <div class="col-sm-10">
+                    <select name="nameSousProcess" id="nameSousProcess" [(ngModel)]="selectedSousProcessus" (change)="onSousProcessusSelect()" class="form-select"
+                    style="border: 0.5px solid #b9cdc6; border-radius: 5PX; width: 100%; height: 38px;" [disabled]="sousProcessusList.length==0" required>
+                        <option value="" selected disabled >Nom sous processus</option>
+                        <option *ngFor="let sousproc of sousProcessusList" [value]="sousproc.id_ligne">{{ sousproc.libelle }} - {{ sousproc.id_ligne }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">{{selectedOptionType}} :</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" [(ngModel)]="matriculeRes" name="inputmatricule" placeholder="Matricule" (keydown.enter)="preventFormSubmission($event)">
+                 </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" [(ngModel)]="nomRes" name="inputNom"  disabled placeholder="Nom">
+                 </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" [(ngModel)]="fonctionRes" name="inputFonction" disabled placeholder="Fonction">
+                 </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" [(ngModel)]="mailRes" name="inputemail" disabled placeholder="Email">
+                 </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" class="btn btn-success btn-sm mx-5"
+                style="border-radius: 10px; width: 140px; height: 35px; font-size: 16px;" (click)="addNewResponsable()">Ajouter</button>
+                <button type="reset" class="btn btn-secondary btn-sm mx-5" 
+                style="border-radius: 10px; width: 140px; height: 35px; font-size: 16px;">Annuler</button>
+            </div>
+        </form>
+    </div>
+    <!-- Si Collaborateur -->
+    <div *ngIf="selectedOptionType === 'collaborateur'">
+        <form>
+            <div class="form-group row mb-2">
+                <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">Processus :</label>
+                <div class="col-sm-10">
+                    <select name="nameProcess" id="nameProcess" [(ngModel)]="selectedProcessus" (change)="onProcessusSelect()" class="form-select"
+                    style="border: 0.5px solid #b9cdc6; border-radius: 5PX; width: 100%; height: 38px;" required>
+                        <option value="" selected disabled >Nom processus</option>
+                        <option *ngFor="let proc of processusList" [value]="proc.id">{{ proc.processus }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">Sous processus :</label>
+                <div class="col-sm-10">
+                    <select name="nameProcess" id="nameProcess" [(ngModel)]="selectedProcessus" (change)="onProcessusSelect()" class="form-select"
+                    style="border: 0.5px solid #b9cdc6; border-radius: 5PX; width: 100%; height: 38px;" required>
+                        <option value="" selected disabled >Nom sous processus</option>
+                        <option *ngFor="let proc of processusList" [value]="proc.id">{{ proc.libelle }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">N+1 :</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="inputmatricule" disabled placeholder="Matricule">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputNom" disabled placeholder="Nom">
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="inputFonction" disabled placeholder="Fonction">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputemail" disabled placeholder="Email">
+                </div>
+            </div>
+            <!-- <div class="form-group row mb-2">
+                <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">{{selectedOptionType}} :</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="inputmatricule" placeholder="Matricule">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputNom" disabled placeholder="Nom">
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="inputFonction" disabled placeholder="Fonction">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputemail" disabled placeholder="Email">
+                </div>
+            </div> -->
+            <div *ngFor="let row of rows; let i = index" class="form-group row mb-2">
+                <label class="col-sm-2 col-form-label fw-bold">
+                    {{ selectedOptionType }} {{ i + 1 }} :
+                </label>
+
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="Matricule">
+                </div>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" disabled placeholder="Nom">
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" disabled placeholder="Fonction">
+                </div>
+
+                <div class="col-sm-3 d-flex">
+                    <input type="text" class="form-control me-2" disabled placeholder="Email">
+                    <!-- bouton pour supprimer une ligne -->
+                    <button type="button" class="btn btn-danger" (click)="removeRow(i)">-</button>
+                </div>
+            </div>
+
+            <!-- bouton ajouter -->
+            <div class="mt-2">
+                <button type="button" class="btn btn-primary" (click)="addRow()">+</button>
+            </div> 
+             <!-- Enregistrement  -->
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-success btn-sm mx-5"
+                style="border-radius: 10px; width: 140px; height: 35px; font-size: 16px;">Enregistrer</button>
+                <button type="reset" class="btn btn-secondary btn-sm mx-5" (click)="resetFormType()"
+                style="border-radius: 10px; width: 140px; height: 35px; font-size: 16px;">Annuler</button>
+            </div>
+        </form>
+    </div>                  
+</div>
+
+<div class="card border-form d-flex flex-column container p-4 mt-4" >
+    <h4 class="mb-4 text-center" style="color: rgb(14, 12, 12); font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+        Consultation
+    </h4> 
+        
+
+    <div class="table-container">
+ <p-table 
+    #dt1
+    [value]="data"
+    [globalFilterFields]="['processus', 'sousProcessus']"
+    [tableStyle]="{'min-width': '50rem'}"
+    [paginator]="true"
+    [rows]="4"
+    stateStorage="session"
+    stateKey="statedemo-session"
+    selectionMode="single"
+    dataKey="id"
+>
+    <ng-template pTemplate="caption">
+        <p-iconField iconPosition="left">
+            <div class="d-flex align-items-center">
+                <input class="form-control me-2"
+                        pInputText
+                        type="text"
+                        (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Rechercher"
+                        style="width: 30%;" />
+
+                <select name="nameProcess"
+                        [(ngModel)]="selectedProcessus"
+                        (change)="onProcessusSelect()"
+                        class="form-select me-2"
+                        style="border: 0.5px solid #b9cdc6; border-radius: 5px; width: 30%; height: 38px;" 
+                        required>
+                    <option value="" selected disabled>Nom processus</option>
+                    <option *ngFor="let proc of processusList" [value]="proc.id">{{ proc.processus }}</option>
+                </select>
+
+                <!-- bouton poussé à droite -->
+                <button class="btn btn-secondary ms-auto"><i class="bi bi-upload me-2"></i>Export (CSV)</button>
+            </div>
+        </p-iconField>
+
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Processus</th>
+            <th>Sous-processus</th>
+            <th>Niveau</th>
+            <th>Matricule</th>
+            <th>Nom</th>
+            <th>Fonction</th>
+            <th>E-mail</th>
+            <th>Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+        <tr>
+            <td>{{ rowData.processus }}</td>
+            <td>{{ rowData.sousProcessus }}</td>
+            <td>{{ rowData.niveau }}</td>
+            <td>{{ rowData.matricule }}</td>
+            <td>{{ rowData.nom }}</td>
+            <td>{{ rowData.fonction }}</td>
+            <td>{{ rowData.email }}</td>
+            <td>
+                <button type="button" class="btn btn-sm me-2 btn-warning">
+                    <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </td>
+            
+        </tr>
+    </ng-template>
+</p-table>
+  
+</div>
+</div>
+

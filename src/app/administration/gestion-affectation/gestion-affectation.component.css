@@ -1,0 +1,23 @@
+.custom-btn {
+  border: 2px solid #198754;
+  color: #198754;
+  background-color: transparent;
+  width: 300px;         /* largeur fixe */
+  min-width: 150px;     /* pour que ça ne rétrécisse pas */
+  max-width: 300px;     /* pour garder la taille constante */
+  text-align: center;   /* centrer le texte */
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Effet hover pour tous les boutons */
+.custom-btn:hover {
+  background-color: #b1ddc9;
+  color: rgb(12, 1, 1);
+}
+
+.active-btn {
+  background-color: #198754 !important;
+  color: white !important;
+  border-color: #198754 !important;
+}

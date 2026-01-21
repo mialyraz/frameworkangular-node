@@ -1,0 +1,226 @@
+<!-- <div id="body-login" class="d-flex flex-row justify-content-center align-items-center" *ngIf="hideLogin">
+    <div class="p-2 rounded shadow" id="login">
+        <div class="p-5 text-center">
+            <img src="assets/images/24013476470 (2).png" class="mb-3" alt="LOGO" width="90" height="90">
+            <br><span class="text-white" style="font-size: 44px;">Luminess</span>
+            <br><span id="titreApplication">{{nameApp}}</span>
+            <form (ngSubmit)="connexion()" #loginForm="ngForm" autocomplete="on">
+                <div class="mt-4">
+                    <div class="input-wrapper">
+                        <input autocomplete="username" name="username" class="input" type="text" maxlength="5"
+                            placeholder="33346" [(ngModel)]="matricule" required="" />
+                        <label class="label" for="name">Matricule</label>
+                        <div class="clear" aria-label="Clear input" (click)="resetLogin()"> <i class="bi bi-x-lg"></i>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input autocomplete="current-password" name="current-password" class="input"
+                            [type]="showPassword ? 'text' : 'password'" placeholder="test" [(ngModel)]="password"
+                            required="" />
+                        <label class="label" for="name">Mot de passe</label>
+                        <div class="clear" aria-label="Clear input" (click)="showPassword = !showPassword"> <i
+                                [ngClass]="{'bi bi-eye':showPassword,'bi bi-eye-slash':!showPassword}"></i> </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <button class="px-4 py-2" id="btn_connexion">Connexion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+
+
+<div  id="body-login" class="d-flex flex-row justify-content-center align-items-center" *ngIf="hideLogin">
+            <div class="d-flex justify-content-center h-100">
+                <div class="user_card">
+                    <div class="d-flex justify-content-center ">
+                        <div class="brand_logo_container">
+                            <img src="assets/images/logo_luminess2.png" class="brand_logo" alt="Logo">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <!-- <span id="titreApplication" class="text-dark text-uppercase "style="font-size: 22px; font-weight: bold;">{{nameApp}}</span> -->
+                        <span id="titreApplication" 
+                            class="text-dark text-uppercase"
+                            style="font-size: 20px; 
+                                    font-weight: 700; 
+                                    letter-spacing: 1px; 
+                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                    text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                        {{ nameApp }}
+                        </span>
+                    </div>
+
+                    <div class="d-flex justify-content-center form_container">
+                        <div>
+                            <form (ngSubmit)="connexion()" #loginForm="ngForm" autocomplete="on">
+                                <div class="row force-menu-widt">
+                                    <div class="col-12 h">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text width-40">
+                                                            <i class="bi bi-person-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input autocomplete="username" name="username" id="username" class="form-control input_user" type="text" 
+                                                        placeholder="User" [(ngModel)]="matricule" required="" />
+                                                    <!-- <input type="password" id="password" name="password" required class="form-control input_pass" placeholder="Mot de passe" autocomplete="current-password" /> -->
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text width-40"  id="togglePassword" (click)="resetLogin()" style="cursor: pointer;">
+                                                            <i class="bi bi-x"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text width-40">
+                                                            <i class="bi bi-key-fill"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input autocomplete="current-password" name="current-password" class="form-control input_pass"
+                                                        [type]="showPassword ? 'text' : 'password'" placeholder="Mot de passe" [(ngModel)]="password"
+                                                        required="" />
+                                                    <!-- <input type="password" id="password" name="password" required class="form-control input_pass" placeholder="Mot de passe" autocomplete="current-password" /> -->
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text width-40" (click)="showPassword = !showPassword" id="togglePassword" style="cursor: pointer;">
+                                                            <i [ngClass]="{'bi bi-eye':showPassword,'bi bi-eye-slash':!showPassword}"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-12">
+                                                <input type="submit" id="_submit" name="_submit" class="btn btn-block mt-4 login_btn " value="Connexion" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+
+
+
+
+<div *ngIf="hideMenu">
+    <div class="fixed-top d-flex flex-column justify-content-between h-100"
+        [ngClass]="{'menu':menuResize, 'menu2':!menuResize}">
+        <div>
+            <div id="donnee_admin" class="w-100" style="margin-top: 18px;">
+
+                <!-- CONDITION EAI -->
+                <span class="h4 fw-lighter" *ngIf="!enCours_eai">
+                    <a class="text-white" routerLink="/accueil" (click)="changeTitle('accueil', '')"
+                        id="text1">
+                        <h3 style="color: rgb(126, 226, 167);" class="p-2">{{menuResize ? nameMenuMax : nameMenuMin}}</h3>
+                        <div ><img src="http://192.168.12.238:81/badge_jouve/photo/{{matricule}}.jpg" class="img-circle"></div>
+
+                    </a>
+                    <a class="text-white" routerLink="/accueil" (click)="changeTitle('accueil', '')"
+                        id="text2">{{nameMenuMin}}</a>
+                </span>
+                <span class="h4 fw-lighter" *ngIf="enCours_eai">
+                    <span id="text1" style="font-size: 16px;">{{menuResize ? nameMenuMax : nameMenuMin}}</span>
+                    <span id="text2" style="font-size: 16px;">{{nameMenuMin}}</span>
+                </span>
+            </div>
+            <div style="margin-top: 18px;">
+                <div *ngFor="let itemMenu of liste_menu; let i = index">
+                    <button *ngIf="itemMenu.route_menu != ''" class="w-100 mt-1"
+                        [ngClass]="{'btn_menu':menuResize, 'btn_menu2':!menuResize}"
+                        routerLink="/{{itemMenu.route_menu}}" (click)="changeTitle(itemMenu.route_menu, '')"
+                        routerLinkActive="is-active" [disabled]="enCours_eai">
+                        <div>
+                            <i class="{{itemMenu.icon_menu}}"
+                                [ngClass]="{'icon_menu':menuResize, 'icon_menu2':!menuResize}"></i>
+                            <span
+                                [ngClass]="{'text_menu':menuResize, 'text_menu2':!menuResize}">{{itemMenu.nom_menu}}</span>
+                        </div>
+                        <div class="fleche"></div>
+                    </button>
+                    <button *ngIf="itemMenu.route_menu == ''" class="btn w-100 mt-1"
+                        [ngClass]="{'btn_menu':menuResize, 'btn_menu2':!menuResize}"
+                        [attr.data-bs-target]="'#collapseSM'+(i+1)" data-bs-toggle="collapse"
+                        (click)="changeTitle(itemMenu.route_menu, '')">
+                        <div>
+                            <i class="{{itemMenu.icon_menu}}"
+                                [ngClass]="{'icon_menu':menuResize, 'icon_menu2':!menuResize}"></i>
+                            <span
+                                [ngClass]="{'text_menu':menuResize, 'text_menu2':!menuResize}">{{itemMenu.nom_menu}}</span>
+                        </div>
+                        <div class="fleche"></div>
+                    </button>
+                    <div class="collapse mt-1 rounded" routerLinkActive="show" [attr.id]="'collapseSM'+(i+1)"
+                        style="background-color: rgba(108, 122, 112, 0.479);">
+                        <div *ngFor="let itemSM of itemMenu.sous_menu"
+                            [ngClass]="{'divSM':menuResize, 'divSM2':!menuResize}">
+                            <button class="btn btn-sm w-100"
+                                [ngClass]="{'btn_menu':menuResize, 'btn_menu2':!menuResize}"
+                                routerLink="/{{itemSM.route_sous_menu}}" routerLinkActive="is-active_SM"
+                                (click)="changeTitle(itemMenu.route_menu, itemSM.route_sous_menu)"
+                                [disabled]="enCours_eai">
+                                <div>
+                                    <i class="{{itemSM.icon_sous_menu}}"
+                                        [ngClass]="{'icon_menu':menuResize, 'icon_menu2':!menuResize}"></i>
+                                    <span
+                                        [ngClass]="{'text_menu':menuResize, 'text_menu2':!menuResize}">{{itemSM.nom_sous_menu}}</span>
+                                </div>
+                                <div class="fleche"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="btn_deconnexion" class="py-3" (click)="deconnexion()" [disabled]="enCours_eai">
+            <i class="bi bi-box-arrow-right" [ngClass]="{'icon_menu':menuResize, 'icon_menu2':!menuResize}"></i>
+            <span [ngClass]="{'text_menu':menuResize, 'text_menu2':!menuResize}">Déconnexion</span>
+        </button>
+    </div>
+
+    <div class="fixed-top" [ngClass]="{'topbar':menuResize, 'topbar2':!menuResize}">
+        <div class="bg-white shadow-sm rounded d-flex flex-row justify-content-between align-items-center" id="hidden">
+            <div style="color: rgb(75, 75, 75);">
+                <i class="bi bi-list me-3" (click)="changerMenuSize()"></i>
+                <span style="font-size: 15px;">{{titleComponent == '' ? 'Suivi Carrière':titleComponent}}</span>
+            </div>
+            <div style="color: rgb(75, 75, 75);">
+                <span style="font-size: 14px;">{{matricule}}</span>
+                <button class="ms-2" id="icon-topBar" *ngIf="role != 'Utilisateur'" routerLink="/users"
+                    (click)="changeTitle('users', '')" [disabled]="enCours_eai"> <i class="bi bi-people-fill"
+                        routerLinkActive="is-active-topbar"></i> </button>
+                <button class="ms-2" id="icon-topBar" *ngIf="role == 'Administrateur'" routerLink="/gestion-menu"
+                    (click)="changeTitle('gestion-menu', '')" [disabled]="enCours_eai"> <i class="bi bi-list-ul"
+                        routerLinkActive="is-active-topbar"></i> </button>
+
+                <!-- CONDITION EAI -->
+                <img src="assets/images/logo-jouveTitle.png" *ngIf="!enCours_eai" routerLink="/accueil" class="ms-2"
+                    style="margin-bottom: 4px;" alt="LOGO" height="20" width="20">
+                <img src="assets/images/logo-jouveTitle.png" *ngIf="enCours_eai" class="ms-2"
+                    style="margin-bottom: 4px;" alt="LOGO" height="20" width="20">
+            </div>
+        </div>
+    </div>
+
+    <div [ngClass]="{'content':menuResize, 'content2':!menuResize}">
+        <router-outlet></router-outlet>
+        <p-toast position="bottom-right" key="success"></p-toast>
+        <p-toast position="bottom-right" key="info"></p-toast>
+        <p-toast position="bottom-right" key="warn"></p-toast>
+        <p-toast position="bottom-right" key="error"></p-toast>
+        <p-toast position="bottom-right" key="secondary"></p-toast>
+        <p-toast position="bottom-right" key="contrast"></p-toast>
+    </div>
+</div>
